@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     saveEntry () {
-      db.collection('herro').add({
+      db.add({
         banned: false,
         age: this.age,
         name: this.name,

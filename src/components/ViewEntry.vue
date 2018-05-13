@@ -31,7 +31,7 @@ export default {
     }
   },
   created () {
-    db.collection('herro').doc(this.$route.params.id).onSnapshot(d => {
+    db.doc(this.$route.params.id).onSnapshot(d => {
       this.id = d.id
       this.data = d.data()
     })
@@ -41,7 +41,7 @@ export default {
       if(!confirm('Are you sure?'))
         return;
 
-      db.collection('herro').doc(this.id).delete()
+      db.doc(this.id).delete()
       this.$router.push('/')
     }
   }

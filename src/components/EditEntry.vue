@@ -56,14 +56,14 @@ export default {
     }
   },
   created () {
-    db.collection('herro').doc(this.$route.params.id).get().then(d => {
+    db.doc(this.$route.params.id).get().then(d => {
       this.id = d.id
       this.data = d.data()
     })
   },
   methods: {
     updateEntry () {
-      db.collection('herro').doc(this.id).update({
+      db.doc(this.id).update({
         name: this.data.name,
         desc: this.data.desc,
         extra: this.data.extra,
