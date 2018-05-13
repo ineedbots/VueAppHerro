@@ -34,7 +34,7 @@ export default {
     }
   },
   created () {
-    db.onSnapshot(q => {
+    db.collection('herro').orderBy('name').onSnapshot(q => {
       this.entries = []
       q.forEach(d => {
         const data = {

@@ -3,7 +3,55 @@
       <div class="nav-wrapper green">
           <div class="container">
               <router-link to="/" class="brand-logo">Editor</router-link>
+              <ul class="right">
+                  <li v-if="isLoggedIn"><span class="email black-text">{{currentUser}}</span></li>
+                  <li v-if="isLoggedIn">
+                      <router-link to="/">Dashboard</router-link>
+                  </li>
+                  <li v-if="!isLoggedIn">
+                      <router-link to="/Login">Login</router-link>
+                  </li>
+                  <li v-if="!isLoggedIn">
+                      <router-link to="/Register">Register</router-link>
+                  </li>
+                  <li v-if="isLoggedIn"> 
+                      <button v-on:click="logout" class="btn black">Logout</button>
+                  </li>
+              </ul>
           </div>
       </div>
   </nav>
 </template>
+
+<script>
+import firebase from 'firebase'
+export default {
+  name: 'Navbar',
+  data () {
+      return {
+          isLoggedIn: false,
+          currentUser: false
+      }
+  },
+  created () {
+      if(firebase.auth().currentUser) {
+          this.isLoggedIn = true
+          this.currentUser = firebase.auth().currentUser.email
+      }
+  },
+  methods: {
+      logout () {
+          firebase.auth().signOut().then(() => {
+              this.$router.go({path: this.$router.path})
+          })
+      }
+  }
+}
+</script>
+
+<style scoped>
+    .email {
+        padding-right: 10px;
+    }
+</style>
+
