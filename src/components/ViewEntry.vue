@@ -21,7 +21,10 @@
 </template>
 
 <script>
-import db from '../conf/FireBaseInit'
+import db from '../util/HerroBase'
+import Console from './Console'
+import auth from '../util/AuthBase'
+
 export default {
   name: 'ViewEntry',
   data () {
@@ -31,7 +34,7 @@ export default {
     }
   },
   created () {
-    db.collection('herro').doc(this.$route.params.id).onSnapshot(d => {
+    db.doc(this.$route.params.id).onSnapshot(d => {
       this.id = d.id
       this.data = d.data()
     })
@@ -40,9 +43,9 @@ export default {
     deleteEntry () {
       if(!confirm('Are you sure?'))
         return;
-
-      db.collection('herro').doc(this.id).delete()
-      this.$router.push('/')
+      
+      Console.methods.println(auth.auth().currentUser.email + " is deleting " + this.data.name)
+      db.doc(this.id).delete().then(q => {this.$router.push('/')}).catch(e => Console.methods.println(e))
     }
   }
 }

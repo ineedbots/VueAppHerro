@@ -26,28 +26,31 @@
 </template>
 
 <script>
-import fireBase from 'firebase'
-export default {
-  name: 'Register',
-  data () {
-      return {
-          email: '',
-          password: ''
-      }
-  },
-  methods: {
-      register (e) {
-          fireBase.auth().createUserWithEmailAndPassword(this.email, this.password)
-          .then(user => {
-              alert(`Account created for ${user.email}`)
-              this.$router.go({path: this.$router.path})
-          }, err => {
-              alert(err.message)
-          })
+import auth from '../util/AuthBase'
+import Console from './Console'
 
-          e.preventDefault()
-      }
-  }
+export default {
+    name: 'Register',
+    data () {
+        return {
+            email: '',
+            password: ''
+        }
+    },
+    methods: {
+        register (e) {
+            Console.methods.println('guest is registering ' + this.email)
+            auth.auth().createUserWithEmailAndPassword(this.email, this.password)
+            .then(user => {
+                Console.methods.println('guest has registered ' + this.email)
+                this.$router.go({path: this.$router.path})
+            }, err => {
+                Console.methods.println(err.message)
+            }).catch(err => Console.methods.println(err.message))
+
+            e.preventDefault()
+        }
+    }
 }
 </script>
 

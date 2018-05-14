@@ -46,7 +46,10 @@
 </template>
 
 <script>
-import db from '../conf/FireBaseInit'
+import db from '../util/HerroBase'
+import Console from './Console'
+import auth from '../util/AuthBase'
+
 export default {
   name: 'EditEntry',
   data () {
@@ -56,14 +59,15 @@ export default {
     }
   },
   created () {
-    db.collection('herro').doc(this.$route.params.id).get().then(d => {
+    db.doc(this.$route.params.id).get().then(d => {
       this.id = d.id
       this.data = d.data()
-    })
+    }).catch(e => Console.methods.println(e))
   },
   methods: {
     updateEntry () {
-      db.collection('herro').doc(this.id).update({
+      Console.methods.println(auth.auth().currentUser.email + " is updating " + this.data.name)
+      db.doc(this.id).update({
         name: this.data.name,
         desc: this.data.desc,
         extra: this.data.extra,
@@ -71,7 +75,7 @@ export default {
         age: this.data.age
       }).then(() => {
         this.$router.push({name: 'ViewEntry', params: {'id':this.id}})
-      })
+      }).catch(e => Console.methods.println(e))
     }
   }
 }

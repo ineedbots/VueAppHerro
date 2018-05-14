@@ -26,7 +26,9 @@
 </template>
 
 <script>
-import fireBase from 'firebase'
+import auth from '../util/AuthBase'
+import Console from './Console'
+
 export default {
   name: 'Login',
   data () {
@@ -37,12 +39,15 @@ export default {
   },
   methods: {
       login (e) {
-          fireBase.auth().signInWithEmailAndPassword(this.email, this.password)
+          Console.methods.println("guest is logging into " + this.email)
+          auth.auth().signInWithEmailAndPassword(this.email, this.password)
           .then(user => {
-              alert(`You are logged in as ${user.email}`)
+              Console.methods.println("guest is logged into " + this.email)
               this.$router.go({path: this.$router.path})
           }, err => {
-              alert(err.message)
+              Console.methods.println(err.message)
+          }).catch(err => {
+              Console.methods.println(err)
           })
 
           e.preventDefault()

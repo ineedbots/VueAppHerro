@@ -6,7 +6,7 @@ import ViewEntry from '@/components/ViewEntry'
 import EditEntry from '@/components/EditEntry'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
-import firebase from 'firebase'
+import auth from '../util/AuthBase'
 
 Vue.use(Router)
 
@@ -37,7 +37,7 @@ let router = new Router({
       }
     },
     {
-      path: '/new',
+      path: '/New',
       name: 'NewEntry',
       component: NewEntry,
       meta: {
@@ -45,7 +45,7 @@ let router = new Router({
       }
     },
     {
-      path: '/view/:id',
+      path: '/View/:id',
       name: 'ViewEntry',
       component: ViewEntry,
       meta: {
@@ -53,7 +53,7 @@ let router = new Router({
       }
     },
     {
-      path: '/edit/:id',
+      path: '/Edit/:id',
       name: 'EditEntry',
       component: EditEntry,
       meta: {
@@ -64,34 +64,20 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if(to.matched.some(record => record.meta.requiresAuth)) {
-    //not logged
-    if(!firebase.auth().currentUser) {
-      //go to login
-      next({
-        path:'/Login',
-        query: {
-          redirect: to.fullPath
-        }
-      })
-    } else {
-      //go to route
-      next()
-    }
-  } else if(to.matched.some(record => record.meta.requiresGuest)) {
-    // logged
-    if(firebase.auth().currentUser) {
-      //go to dash
-      next({
-        path:'/',
-        query: {
-          redirect: to.fullPath
-        }
-      })
-    } else {
-      //go to route
-      next()
-    }
+  if(to.matched.some(record => record.meta.requiresAuth) && !auth.auth().currentUser) {
+    next({
+      path:'/Login',
+      query: {
+        redirect: to.fullPath
+      }
+    })
+  } else if(to.matched.some(record => record.meta.requiresGuest) && auth.auth().currentUser) {
+    next({
+      path:'/',
+      query: {
+        redirect: to.fullPath
+      }
+    })
   } else {
     next()
   }

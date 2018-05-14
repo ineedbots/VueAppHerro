@@ -41,7 +41,10 @@
 </template>
 
 <script>
-import db from '../conf/FireBaseInit'
+import db from '../util/HerroBase'
+import Console from './Console'
+import auth from '../util/AuthBase'
+
 export default {
   name: 'NewEntry',
   data () {
@@ -54,7 +57,8 @@ export default {
   },
   methods: {
     saveEntry () {
-      db.collection('herro').add({
+      Console.methods.println(auth.auth().currentUser.email + " is creating " + this.name)
+      db.add({
         banned: false,
         age: this.age,
         name: this.name,
@@ -62,7 +66,7 @@ export default {
         extra: this.extra
       }).then(d => {
         this.$router.push('/')
-      })
+      }).catch(e => Console.methods.println(e))
     }
   }
 }

@@ -25,7 +25,8 @@
 </template>
 
 <script>
-import db from '../conf/FireBaseInit'
+import db from '../util/HerroBase'
+
 export default {
   name: 'DashBoard',
   data () {
@@ -34,12 +35,12 @@ export default {
     }
   },
   created () {
-    db.collection('herro').orderBy('name').onSnapshot(q => {
+    db.orderBy('name').onSnapshot(q => {
       this.entries = []
       q.forEach(d => {
         const data = {
-          'id': d.id,
-          'data': d.data()
+        'id': d.id,
+        'data': d.data()
         }
         this.entries.push(data)
       })
