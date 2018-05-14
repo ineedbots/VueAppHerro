@@ -37,6 +37,9 @@ export default {
           password: ''
       }
   },
+  created () {
+    Console.methods.println("guest has joined")
+  },
   methods: {
       login (e) {
           Console.methods.println("guest is logging into " + this.email)

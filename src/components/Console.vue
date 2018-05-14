@@ -1,14 +1,14 @@
 <template>
-  <div class="container">
+  <div class="Console">
       <ul class="collection" id="console">
           <li class="collection-item" v-for="ent in entries" v-bind:key="ent.id">{{ent.data.name}}: {{ent.data.message}}</li>
       </ul>
 
-    <input type="submit" name="search" value="Send" style="float: left" class="btn" @click="send"/>
-    <div style="overflow: hidden; padding-left: .5em;">
-        <input type="text" name="term" style="width: 100%;" v-model="message" @keydown="keyd"/>
+        <input type="submit" name="search" value="Send" style="float: left" class="btn" @click="send"/>
+        <div style="overflow: hidden; padding-left: .5em;">
+            <input type="text" name="term" style="width: 100%;" v-model="message" @keydown="keyd"/>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
