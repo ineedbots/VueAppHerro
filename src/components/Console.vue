@@ -73,7 +73,11 @@ export default {
 <style scoped>
 #console {
     overflow: auto;
-    height: 300px;
+    height: 150px;
+}
+
+#console .collection-item {
+    padding: 0;
 }
 </style>
 

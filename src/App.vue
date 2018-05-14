@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <NavBar/>
-    <router-view/>
-    <Console id="consoleapp"/>
+    <router-view id="mainview"/>
+    <Console id="consoleview"/>
   </div>
 </template>
 
@@ -19,11 +19,16 @@ export default {
 }
 </script>
 
-<style scoped>
-#consoleapp {
-  position: absolute;
+<style>
+#mainview {
+  padding-bottom: 230px;
+}
+#consoleview {
+  position: fixed;
   bottom: 0;
-  width:100%;
+  z-index: 100;
+  background-color: aliceblue;
+  width: 100%;
 }
 </style>
 
