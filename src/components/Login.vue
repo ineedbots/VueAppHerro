@@ -42,8 +42,7 @@ export default {
           Console.methods.println("guest is logging into " + this.email)
           auth.auth().signInWithEmailAndPassword(this.email, this.password)
           .then(user => {
-              Console.methods.println("guest is logged into " + this.email)
-              this.$router.go({path: this.$router.path})
+              Console.methods.printlnwait("guest is logged into " + this.email, () => this.$router.go({path: this.$router.path}))
           }, err => {
               Console.methods.println(err.message)
           }).catch(err => {

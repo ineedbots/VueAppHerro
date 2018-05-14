@@ -35,6 +35,13 @@ export default {
             sent: auth.firestore.FieldValue.serverTimestamp()
         }).then().catch(e => alert(e))
       },
+      printlnwait (what, dothen) {
+          chat.add({
+            name: 'LOG',
+            message: what,
+            sent: auth.firestore.FieldValue.serverTimestamp()
+        }).then(dothen()).catch(e => alert(e))
+      },
       send () {
           if(this.message !== '') {
               let email = "guest"

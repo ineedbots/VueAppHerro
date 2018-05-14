@@ -39,9 +39,10 @@ export default {
   },
   methods: {
       logout () {
+          Console.methods.println(this.currentUser.email + " is logging out.")
+          
           auth.auth().signOut().then(() => {
-              Console.methods.println(this.currentUser.email + " is logging out.")
-              this.$router.go({path: this.$router.path})
+              Console.methods.printlnwait(this.currentUser.email + " has logged out.", () => this.$router.go({path: this.$router.path}))
           }).catch(e => Console.methods.println(e))
       }
   }

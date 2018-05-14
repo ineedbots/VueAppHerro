@@ -42,8 +42,7 @@ export default {
             Console.methods.println('guest is registering ' + this.email)
             auth.auth().createUserWithEmailAndPassword(this.email, this.password)
             .then(user => {
-                Console.methods.println('guest has registered ' + this.email)
-                this.$router.go({path: this.$router.path})
+                Console.methods.printlnwait('guest has registered ' + this.email, () => this.$router.go({path: this.$router.path}))
             }, err => {
                 Console.methods.println(err.message)
             }).catch(err => Console.methods.println(err.message))
