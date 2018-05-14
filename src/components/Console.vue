@@ -28,19 +28,17 @@ export default {
       el.scrollTop = el.scrollHeight
   },
   methods: {
-      println (what) {
-          chat.add({
-            name: 'LOG',
+      println (what, who, dothen) {
+        if(!who)
+            who = "log"
+        if(!dothen)
+            dothen = () => {}
+
+        chat.add({
+            name: who,
             message: what,
             sent: auth.firestore.FieldValue.serverTimestamp()
-        }).then().catch(e => alert(e))
-      },
-      printlnwait (what, dothen) {
-          chat.add({
-            name: 'LOG',
-            message: what,
-            sent: auth.firestore.FieldValue.serverTimestamp()
-        }).then(dothen()).catch(e => alert(e))
+        }).then(d => dothen()).catch(e => alert(e))
       },
       send () {
           if(this.message !== '') {
@@ -48,11 +46,7 @@ export default {
               if(auth.auth().currentUser)
                 email = auth.auth().currentUser.email
 
-            chat.add({
-                name: email,
-                message: this.message,
-                sent: auth.firestore.FieldValue.serverTimestamp()
-            }).then().catch(e => alert(e))
+            this.println(this.message, email)
           }
           this.message = ''
       },

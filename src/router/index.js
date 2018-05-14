@@ -7,6 +7,7 @@ import EditEntry from '@/components/EditEntry'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import auth from '../util/AuthBase'
+import Console from '@/components/Console'
 
 Vue.use(Router)
 
@@ -65,6 +66,7 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAuth) && !auth.auth().currentUser) {
+    Console.methods.println("guest has joined")
     next({
       path:'/Login',
       query: {

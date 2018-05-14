@@ -2,7 +2,7 @@
   <nav>
       <div class="nav-wrapper green">
           <div class="container">
-              <router-link to="/" class="brand-logo">Editor</router-link>
+              <router-link to="/Login" class="brand-logo">Editor</router-link>
               <ul class="right">
                   <li v-if="currentUser"><span class="email black-text">{{currentUser.email}}</span></li>
                   <li v-if="currentUser">
@@ -42,7 +42,7 @@ export default {
           Console.methods.println(this.currentUser.email + " is logging out.")
           
           auth.auth().signOut().then(() => {
-              Console.methods.printlnwait(this.currentUser.email + " has logged out.", () => this.$router.go({path: this.$router.path}))
+              Console.methods.println(this.currentUser.email + " has logged out.", null, () => this.$router.go({path: this.$router.path}))
           }).catch(e => Console.methods.println(e))
       }
   }

@@ -37,15 +37,12 @@ export default {
           password: ''
       }
   },
-  created () {
-    Console.methods.println("guest has joined")
-  },
   methods: {
       login (e) {
           Console.methods.println("guest is logging into " + this.email)
           auth.auth().signInWithEmailAndPassword(this.email, this.password)
           .then(user => {
-              Console.methods.printlnwait("guest is logged into " + this.email, () => this.$router.go({path: this.$router.path}))
+              Console.methods.println("guest is logged into " + this.email, null, () => this.$router.go({path: this.$router.path}))
           }, err => {
               Console.methods.println(err.message)
           }).catch(err => {
